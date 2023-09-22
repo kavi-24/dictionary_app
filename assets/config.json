@@ -1,0 +1,112 @@
+{
+  "name": "CustomIcons",
+  "css_prefix_text": "",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "ffff30e34cad5adeec4d8a07aa7143c2",
+      "css": "border_all",
+      "code": 59392,
+      "src": "material"
+    },
+    {
+      "uid": "8b477a390fca32fdefa0ca0c1f280ba5",
+      "css": "format_list_bulleted",
+      "code": 59393,
+      "src": "material"
+    },
+    {
+      "uid": "69724701737f3b29a03d30f28252ddf2",
+      "css": "dice_four",
+      "code": 62756,
+      "src": "fontawesome5"
+    },
+    {
+      "uid": "9725db89b610135dc76cd8a21afffa83",
+      "css": "search",
+      "code": 59394,
+      "src": "linecons"
+    },
+    {
+      "uid": "0a734ab270742f52fdebc7eac6183f32",
+      "css": "keyboard_voice",
+      "code": 59395,
+      "src": "material"
+    },
+    {
+      "uid": "e9f1a477968111eab72aacfdce5a3d9f",
+      "css": "saved",
+      "code": 62259,
+      "src": "octicons"
+    },
+    {
+      "uid": "e9f1a4fd968111eab72aacfdce5a3d9f",
+      "css": "unsaved",
+      "code": 62393,
+      "src": "octicons"
+    },
+    {
+      "uid": "ivmsk67zo1yb1tthd3ugi4xnb3get418",
+      "css": "sun",
+      "code": 59396,
+      "src": "typicons"
+    },
+    {
+      "uid": "7c638496e4c7e626bc48bb5d8e6adc1d",
+      "css": "home",
+      "code": 59397,
+      "src": "linearicons"
+    },
+    {
+      "uid": "e9f1a447968111eab72aacfdce5a3d9f",
+      "css": "plus",
+      "code": 62211,
+      "src": "octicons"
+    },
+    {
+      "uid": "35005cd5938507ccf1bae309f49a7f18",
+      "css": "history",
+      "code": 61914,
+      "src": "fontawesome5"
+    },
+    {
+      "uid": "41c01fe7bfa79a93a2a2971a7f347fc0",
+      "css": "camera",
+      "code": 62711,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "95535e598dca8b1eaaa7f79acd105086",
+      "css": "content_copy",
+      "code": 59398,
+      "src": "material"
+    },
+    {
+      "uid": "76857a03fbaa6857fe063b6c25aa98ed",
+      "css": "volume-up",
+      "code": 59399,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "142ad442869936142d2e5fb5b30703f6",
+      "css": "share_alt",
+      "code": 61920,
+      "src": "fontawesome5"
+    },
+    {
+      "uid": "667b873c8422e4cab006df8422cb51c5",
+      "css": "pencil",
+      "code": 59400,
+      "src": "iconic"
+    },
+    {
+      "uid": "3ab2abf6f936d3e53ee8c184cedaed82",
+      "css": "trash",
+      "code": 59401,
+      "src": "elusive"
+    }
+  ]
+}
