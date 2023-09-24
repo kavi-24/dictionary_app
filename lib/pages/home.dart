@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:clipboard/clipboard.dart';
 import 'package:dictionary_app/common/colours.dart';
-import 'package:dictionary_app/custom_icons_icons.dart';
+import 'package:dictionary_app/common/custom_icons_icons.dart';
 import 'package:dictionary_app/pages/meaning.dart';
 import 'package:dictionary_app/services/get_meaning.dart';
 import 'package:dictionary_app/services/get_words.dart';
@@ -15,7 +13,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 // ignore: must_be_immutable
 class Home extends StatefulWidget {
-  Home({super.key, required this.words});
+  const Home({super.key, required this.words});
   final List<String> words;
 
   @override
@@ -77,21 +75,27 @@ class _HomeState extends State<Home> {
         false;
   }
 
-  /*
-  [{"meta":{"id":"cosmopolis","uuid":"73c5144f-6aa2-4016-b594-445d4bb3eec1","sort":"035636400","src":"collegiate","section":"alpha","stems":["cosmopolis","cosmopolises"],"offensive":false},"hwi":{"hw":"cos*mop*o*lis","prs":[{"mw":"k\u00e4z-\u02c8m\u00e4-p\u0259-l\u0259s","sound":{"audio":"cosmop01","ref":"c","stat":"1"}}]},"fl":"noun","def":[{"sseq":[[["sense",{"dt":[["text","{bc}a {a_link|cosmopolitan} city"]]}]]]}],"et":[["text","New Latin, back-formation from {it}cosmopolites{\/it}"]],"date":"1849","shortdef":["a cosmopolitan city"]}]
-
-  [{"meta":{"id":"hello","uuid":"0cdef8d5-c9d1-431b-b397-2077a127c328","sort":"080126800","src":"collegiate","section":"alpha","stems":["hello","hellos"],"offensive":false},"hwi":{"hw":"hel*lo","prs":[{"mw":"h\u0259-\u02C8l\u014D","sound":{"audio":"hello001","ref":"c","stat":"1"}},{"mw":"he-"}]},"fl":"noun","ins":[{"il":"plural","if":"hel*los"}],"def":[{"sseq":[[["sense",{"dt":[["text","{bc}an expression or gesture of greeting "],["uns",[[["text","used interjectionally in greeting, in answering the telephone, or to express surprise "],["vis",[{"t":"{wi}hello{/wi} there"},{"t":"waved {wi}hello{/wi}"}]]]]]]}]]]}],"et":[["text","alteration of {it}hollo{/it}"]],"date":"1834","shortdef":["an expression or gesture of greeting \u2014used interjectionally in greeting, in answering the telephone, or to express surprise"]},{"meta":{"id":"hullo","uuid":"a8b26bf8-dba0-44d5-b1de-4a9a69e5ef10","sort":"080299200","src":"collegiate","section":"alpha","stems":["hello","hullo","hullos"],"offensive":false},"hwi":{"hw":"hul*lo","prs":[{"mw":"(\u02CC)h\u0259-\u02C8l\u014D","sound":{"audio":"hullo001","ref":"c","stat":"1"}}]},"cxs":[{"cxl":"chiefly British spelling of","cxtis":[{"cxt":"hello"}]}],"shortdef":[]}]
-  */
-
-  Map formatMeaning(String word, String meaning) {
-    FlutterClipboard.copy(meaning);
+  Future<List> getMeaing_(String query) async {
+    GetMeaning getMeaning = GetMeaning();
+    Map map = {};
     try {
-      return jsonDecode(meaning.substring(1, meaning.length - 1));
+      map = await getMeaning.getMeaningDictAPIColl(query);
+      // FlutterClipboard.copy(map.toString());
+      return [map, "coll"];
     } catch (e) {
-      // setState(() {
-      //   wordsClone.remove(word);
-      // });
-      return {};
+      try {
+        map = await getMeaning.getMeaningDictAPIInter(query);
+        // FlutterClipboard.copy(map.toString());
+        return [map, "inter"];
+      } catch (e) {
+        try {
+          map = await getMeaning.getMeaningAPIDict(query);
+          // FlutterClipboard.copy(map.toString());
+          return [map, "api"];
+        } catch (e) {
+          return [];
+        }
+      }
     }
   }
 
@@ -103,6 +107,35 @@ class _HomeState extends State<Home> {
       */
       onWillPop: _onWillPopScope,
       child: Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          elevation: 20,
+          iconSize: 30,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: colours[3],
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home_outlined,
+              ),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.bookmark_added_outlined,
+              ),
+              label: "Bookmarks",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.settings,
+              ),
+              label: "Settings",
+            ),
+          ],
+          onTap: (index) {
+            //Handle button tap
+          },
+        ),
         body: SafeArea(
           child: Column(
             children: [
@@ -281,20 +314,22 @@ class _HomeState extends State<Home> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return GestureDetector(
                                     onTap: () async {
-                                      String meaning = await GetMeaning()
-                                          .getMeaning(wordsClone[index]);
-                                      Map meaningMap = formatMeaning(
-                                          wordsClone[index], meaning);
-                                      if (meaningMap.isNotEmpty)
+                                      List l =
+                                          await getMeaing_(wordsClone[index]);
+                                      if (l.isNotEmpty) {
+                                        Map meaningMap = l[0];
+                                        String source = l[1];
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => Meaning(
-                                              word: wordsClone[index],
-                                              meaning: meaningMap,
+                                              // word: wordsClone[index],
+                                              map: meaningMap,
+                                              // source: source,
                                             ),
                                           ),
                                         );
+                                      }
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -323,20 +358,22 @@ class _HomeState extends State<Home> {
                                 itemBuilder: (context, index) =>
                                     GestureDetector(
                                   onTap: () async {
-                                    String meaning = await GetMeaning()
-                                        .getMeaning(wordsClone[index]);
-                                    Map meaningMap = formatMeaning(
-                                        wordsClone[index], meaning);
-                                    if (meaningMap.isNotEmpty)
+                                    List l =
+                                        await getMeaing_(wordsClone[index]);
+                                    if (l.isNotEmpty) {
+                                      Map meaningMap = l[0];
+                                      String source = l[1];
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => Meaning(
-                                            word: wordsClone[index],
-                                            meaning: meaningMap,
+                                            // word: wordsClone[index],
+                                            map: meaningMap,
+                                            // source: source,
                                           ),
                                         ),
                                       );
+                                    }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -360,20 +397,22 @@ class _HomeState extends State<Home> {
                                 itemBuilder: (context, index) =>
                                     GestureDetector(
                                   onTap: () async {
-                                    String meaning = await GetMeaning()
-                                        .getMeaning(snapshot.data![index]);
-                                    Map meaningMap = formatMeaning(
-                                        wordsClone[index], meaning);
-                                    if (meaningMap.isNotEmpty)
+                                    List l =
+                                        await getMeaing_(snapshot.data![index]);
+                                    if (l.isNotEmpty) {
+                                      Map meaningMap = l[0];
+                                      String source = l[1];
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => Meaning(
-                                            word: snapshot.data![index],
-                                            meaning: meaningMap,
+                                            // word: snapshot.data![index],
+                                            map: meaningMap,
+                                            // source: source,
                                           ),
                                         ),
                                       );
+                                    }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(

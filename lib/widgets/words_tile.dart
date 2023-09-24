@@ -17,9 +17,7 @@ class WordsTile extends StatelessWidget {
       padding: const EdgeInsets.all(8).copyWith(left: 10, right: 10),
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white70
-      ),
+          borderRadius: BorderRadius.circular(10), color: Colors.white70),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/CustomIcons.ttf
 ///
-/// 
+///
 /// * Material Design Icons, Copyright (C) Google, Inc
 ///         Author:    Google
 ///         License:   Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
@@ -63,21 +63,38 @@ class CustomIcons {
   static const _kFontFam = 'CustomIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData border_all = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData format_list_bulleted = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData search = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData keyboard_voice = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData sun = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData home = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData content_copy = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData volume_up = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData pencil = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData trash = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData history = IconData(0xf1da, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData share_alt = IconData(0xf1e0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData plus = IconData(0xf303, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData saved = IconData(0xf333, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData unsaved = IconData(0xf3b9, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData camera = IconData(0xf4f7, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dice_four = IconData(0xf524, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData border_all =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData format_list_bulleted =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData search =
+      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData keyboard_voice =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData sun =
+      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData home =
+      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData content_copy =
+      IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData volume_up =
+      IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData pencil =
+      IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData trash =
+      IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData history =
+      IconData(0xf1da, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData share_alt =
+      IconData(0xf1e0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData plus =
+      IconData(0xf303, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData saved =
+      IconData(0xf333, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData unsaved =
+      IconData(0xf3b9, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData camera =
+      IconData(0xf4f7, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dice_four =
+      IconData(0xf524, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
