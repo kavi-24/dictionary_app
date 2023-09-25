@@ -9,7 +9,7 @@ import 'package:dictionary_app/common/api_key.dart';
 {
   "word": word,
   "type": noun|verb|adj/...,
-  "pronounciation": Optional(pronounciation)
+  "pronunciation": Optional(pronunciation)
   "meanings": List<String>,
   "examples": List<String>
 }
@@ -27,10 +27,10 @@ class GetMeaning {
     Map map = List.from(jsonDecode(resp))[0];
     // print(map);
 
-    String word = map["meta"]["id"];
+    // String word = map["meta"]["id"].replaceAll(RegExp(r':.*'), '');
     String type = map["fl"];
     // check if map["hwi"]["prs"] is present
-    String pronounciation = map["hwi"]["prs"] != null
+    String pronunciation = map["hwi"]["prs"] != null
         ? map["hwi"]["prs"][0]["mw"]
         : map["hwi"]["hw"];
     List<String> meanings = [];
@@ -52,6 +52,8 @@ class GetMeaning {
       }
     }
 
+    meanings = meanings.toSet().toList();
+
     if (meanings.isEmpty) {
       meanings.add("No meanings found");
     }
@@ -69,14 +71,16 @@ class GetMeaning {
       }
     }
 
+    examples = examples.toSet().toList();
+
     if (examples.isEmpty) {
       examples.add("No examples found");
     }
 
     Map<String, dynamic> meaningDict = {
-      "word": word,
+      "word": query,
       "type": type,
-      "pronounciation": pronounciation,
+      "pronunciation": pronunciation,
       "meanings": meanings,
       "examples": examples
     };
@@ -99,10 +103,10 @@ class GetMeaning {
     Map map = List.from(jsonDecode(resp))[0];
     // print(map);
 
-    String word = map["meta"]["id"];
+    // String word = map["meta"]["id"];
     String type = map["fl"];
     // check if map["hwi"]["prs"] is present
-    String pronounciation = map["hwi"]["prs"] != null
+    String pronunciation = map["hwi"]["prs"] != null
         ? map["hwi"]["prs"][0]["mw"]
         : map["hwi"]["hw"];
     List<String> meanings = [];
@@ -117,12 +121,14 @@ class GetMeaning {
           i[0][1]["dt"][0][1]
               .replaceAll(RegExp(r'\{.*?\}'), '')
               .replaceAll(RegExp(r'\s+'), ' ')
-              .toString(),
+              .toString()
+              .trim(),
         );
       } catch (e) {
         continue;
       }
     }
+    meanings = meanings.toSet().toList();
 
     for (var i in sseq) {
       try {
@@ -130,17 +136,19 @@ class GetMeaning {
           i[0][1]["dt"][1][1][0]["t"]
               .replaceAll(RegExp(r'\{.*?\}'), '')
               .replaceAll(RegExp(r'\s+'), ' ')
-              .toString(),
+              .toString()
+              .trim(),
         );
       } catch (e) {
         continue;
       }
     }
+    examples = examples.toSet().toList();
 
     Map<String, dynamic> meaningDict = {
-      "word": word,
+      "word": query,
       "type": type,
-      "pronounciation": pronounciation,
+      "pronunciation": pronunciation,
       "meanings": meanings,
       "examples": examples
     };
@@ -183,9 +191,9 @@ class GetMeaning {
     Map map = jsonDecode(resp);
     // print(map);
 
-    String word = map["word"];
+    // String word = map["word"];
     String type = map["meanings"][0]["partOfSpeech"];
-    String pronounciation = map["phonetic"];
+    String pronunciation = map["phonetic"];
     List<String> meanings = [];
     List<String> examples = [];
 
@@ -197,11 +205,13 @@ class GetMeaning {
         }
       }
     }
+    meanings = meanings.toSet().toList();
+    examples = examples.toSet().toList();
 
     Map<String, dynamic> meaningDict = {
-      "word": word,
+      "word": query,
       "type": type,
-      "pronounciation": pronounciation,
+      "pronunciation": pronunciation,
       "meanings": meanings,
       "examples": examples
     };

@@ -1,13 +1,45 @@
 import 'package:dictionary_app/common/colours.dart';
+import 'package:dictionary_app/services/database.dart';
+// import 'package:dictionary_app/services/database.dart';
 import 'package:flutter/material.dart';
 
-class WordsTile extends StatelessWidget {
+class WordsTile extends StatefulWidget {
   const WordsTile({super.key, required this.text, this.width});
   final String text;
   final int? width;
 
+  @override
+  State<WordsTile> createState() => _WordsTileState();
+}
+
+class _WordsTileState extends State<WordsTile> {
+
+  List<Map<String, dynamic>> dbData = [];
+
+  @override
+  void initState() {
+    readDB();
+    super.initState();
+  }
+
+  void readDB() async {
+    await DatabaseHelper().readData().then((value) {
+      setState(() {
+        dbData = value;
+      });
+    });
+  }
+
   bool getIfBookmarked(String text) {
-    return false;
+    bool retVal = false;
+    for (int i = 0; i < dbData.length; i++) {
+      if (dbData[i]["word"] == text) {
+        retVal = true;
+        break;
+      }
+    }
+    // print(retVal);
+    return retVal;
   }
 
   @override
@@ -22,9 +54,9 @@ class WordsTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            width: width != null ? width!.toDouble() : null,
+            width: widget.width != null ? widget.width!.toDouble() : null,
             child: Text(
-              text,
+              widget.text,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 20,
@@ -38,8 +70,8 @@ class WordsTile extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: Icon(
-              getIfBookmarked(text) ? Icons.bookmark : Icons.bookmark_border,
-              color: !getIfBookmarked(text) ? Colors.grey.shade400 : colours[3],
+              getIfBookmarked(widget.text) ? Icons.bookmark : Icons.bookmark_border,
+              color: !getIfBookmarked(widget.text) ? Colors.grey.shade400 : colours[3],
             ),
           ),
         ],

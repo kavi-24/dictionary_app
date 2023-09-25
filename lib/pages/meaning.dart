@@ -1,6 +1,8 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:dictionary_app/common/colours.dart';
+import 'package:dictionary_app/pages/bookmarks.dart';
 import 'package:dictionary_app/pages/loading.dart';
+import 'package:dictionary_app/pages/settings.dart';
 import 'package:dictionary_app/widgets/list_sentence.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -22,6 +24,12 @@ class Meaning extends StatefulWidget {
 
 class _MeaningState extends State<Meaning> {
   FlutterTts flutterTts = FlutterTts();
+  int selectedIndex = 0;
+  List<Widget> screens = [
+    Loading(),
+    Bookmarks(),
+    Settings(),
+  ];
 
   void speak() async {
     var result = await flutterTts.speak(widget.map["word"]);
@@ -38,8 +46,8 @@ class _MeaningState extends State<Meaning> {
       bottomNavigationBar: BottomNavigationBar(
         elevation: 20,
         iconSize: 30,
-        type: BottomNavigationBarType.fixed,
         selectedItemColor: colours[3],
+        currentIndex: selectedIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
@@ -61,7 +69,17 @@ class _MeaningState extends State<Meaning> {
           ),
         ],
         onTap: (index) {
-          //Handle button tap
+          if (index != selectedIndex) {
+            setState(() {
+              selectedIndex = index;
+            });
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => screens[index],
+              ),
+            );
+          }
         },
       ),
       backgroundColor: Colors.grey.shade100,
@@ -159,7 +177,7 @@ class _MeaningState extends State<Meaning> {
                       Column(
                         children: [
                           Text(
-                            widget.map["pronounciation"],
+                            widget.map["pronunciation"],
                             style: const TextStyle(
                               color: Colors.white,
                               fontStyle: FontStyle.italic,
@@ -509,7 +527,7 @@ List<String> getMeanings() {
     return widget.meaning["hwi"]["hw"] ?? "";
   }
 
-  String getPronounciation() {
+  String getPronunciation() {
     try {
       return widget.meaning["hwi"]["prs"][0]["mw"] ?? "";
     } catch (e) {
